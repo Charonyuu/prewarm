@@ -1,12 +1,16 @@
 <p align="center">
-  <img src="docs/banner.png" alt="Claude Prewarm — start your 5-hour window before you start coding" width="900">
+  <img src="docs/banner.png" alt="Prewarm — start your 5-hour windows before you sit down" width="900">
 </p>
 
-<h1 align="center">Claude Prewarm</h1>
+<h1 align="center">Prewarm</h1>
+
+<p align="center"><i>Formerly Claude Prewarm. It now covers Codex, Grok and agy too.</i></p>
 
 <p align="center">
-  A macOS menu bar app that starts your Claude usage window before you sit down.<br>
-  <a href="https://github.com/Charonyuu/Claude-prewarm/releases/latest"><b>Download for macOS</b></a>
+  A macOS menu bar app that starts your AI coding windows before you sit down,<br>
+  and keeps Claude, Codex, Grok and agy limits in one menu.<br>
+  <a href="https://github.com/Charonyuu/prewarm/releases/latest"><b>Download for macOS</b></a>
+  · <a href="https://apps.app.charonyu.cc/en/prewarm/">Website</a>
   · 100% local · No API keys · No telemetry
 </p>
 
@@ -16,11 +20,12 @@
 
 Claude Code gives you a rolling **5-hour usage window**. The clock starts on your
 first request of the day — so if you start work at 09:00, your window runs to 14:00,
-and you spend the whole afternoon waiting for it to reset.
+and you spend the afternoon waiting for it to reset. agy (the Antigravity CLI), and
+Codex on plans that have one, work the same way.
 
 ## What this does
 
-Claude Prewarm sends **one tiny request** at a time you choose, before work.
+Prewarm sends **one tiny request** at a time you choose, before work.
 
 ```
 Without Prewarm                    With Prewarm
@@ -30,16 +35,16 @@ Without Prewarm                    With Prewarm
                                           ↑ before lunch
 ```
 
-Same quota, earlier window. You reach your next reset sooner in the working day.
+Same quota, earlier window. It does **not** give you more usage; it only moves the window.
 
-> It does **not** give you more usage. It only moves the window.
+And because you probably use more than one tool, the menu shows every limit side by side.
 
 ## Install
 
 **With Homebrew:**
 
 ```bash
-brew install --cask Charonyuu/tap/claude-prewarm
+brew install --cask Charonyuu/tap/prewarm
 ```
 
 `brew upgrade` keeps it current from then on.
@@ -47,120 +52,123 @@ brew install --cask Charonyuu/tap/claude-prewarm
 **Or one command, without Homebrew:**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Charonyuu/Claude-prewarm/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Charonyuu/prewarm/main/install.sh | bash
 ```
 
-Downloads the latest release, checks Apple's notarization, installs it to
-`/Applications` and launches it.
+**Or by hand:** [download the latest dmg](https://github.com/Charonyuu/prewarm/releases/latest),
+drag **Prewarm** into Applications and launch it. Signed and notarized by Apple.
 
-**Or by hand:**
-
-1. **[Download the latest dmg](https://github.com/Charonyuu/Claude-prewarm/releases/latest)**
-2. Open it, drag **Claude Prewarm** into Applications
-3. Launch it — a bolt appears in your menu bar
-
-**Or ask Claude Code to do it**, since you already have it:
-
-> Install Claude Prewarm from github.com/Charonyuu/Claude-prewarm
-
-Signed and notarized by Apple, so it opens with no security warnings.
-
-**You need:**
-
-- macOS 14 (Sonoma) or later
-- [Claude Code](https://docs.claude.com/en/docs/claude-code/setup) installed and signed in
-
-The app uses the Claude CLI you are already signed in to. There is no API key to
-enter and nothing to configure beyond your working hours.
+**You need** macOS 14 (Sonoma) or later, and at least one of these, installed and signed in:
+[Claude Code](https://docs.claude.com/en/docs/claude-code/setup),
+[Codex](https://developers.openai.com/codex/cli),
+[Grok Build](https://x.ai/cli) or
+[agy](https://antigravity.google/docs). Tools you don't have can be hidden.
 
 ## Using it
 
-Click the bolt in your menu bar.
+Click the bolt in your menu bar (or press **⌥⌘P**). Right-click it for Warm now,
+Refresh, and Skip tomorrow's warm-up.
 
-| Light | Dark |
+| Overview | Claude |
 |---|---|
-| <img src="docs/panel-light.png" width="330"> | <img src="docs/panel-dark.png" width="330"> |
+| <img src="docs/panel-overview-light.png" width="340"> | <img src="docs/panel-claude-light.png" width="340"> |
 
-**Next warmup** — when the app will warm next
-**Work starts** — the time you told it you start
-**Claude resets around** — when your current 5-hour window ends
-**Warm Now** — warm immediately, if you want to start the clock by hand
-**5h limit / Weekly limit** — how much of each window you have spent, read live
-from Claude itself, refreshed every time you open the panel
+**Overview** puts every tool's 5-hour and weekly numbers in one place. Each tab
+also carries a tiny meter, so you can see who is close to the limit without switching.
+
+| Codex | Grok | agy |
+|---|---|---|
+| <img src="docs/panel-codex-light.png" width="260"> | <img src="docs/panel-grok-light.png" width="260"> | <img src="docs/panel-agy-light.png" width="260"> |
+
+| Tool | What you see | Warm-up |
+|---|---|---|
+| Claude | 5-hour session, weekly limit, per-model weekly limits, and what is using your limits (long context, subagents, parallel sessions) | Yes |
+| Codex | 5-hour and weekly limits as your plan has them, free resets left and when they expire, credits | When your plan has a 5-hour window |
+| Grok | Weekly credits used, billing period, prepaid balance | No (weekly credits only) |
+| agy | 5-hour and weekly limits for Gemini models and for Claude & GPT models, plus single-model limits | Yes, each group separately |
+
+Weekly limits get a **pace** line: whether, at your current rate, the limit lasts
+until it resets — and if not, roughly when it runs out.
 
 ### Settings
 
-| Light | Dark |
+| Schedule | Notifications |
 |---|---|
-| <img src="docs/settings-light.png" width="330"> | <img src="docs/settings-dark.png" width="330"> |
+| <img src="docs/settings-schedule-light.png" width="420"> | <img src="docs/settings-notifications-light.png" width="420"> |
 
-- **Work days** — pick any combination, at least one
-- **I start working at** — your usual start time
-- **Prewarm** — how far ahead to warm: 30 minutes, 1, 2, 3 or 4 hours
-- **Launch at login** — so it is always ready
-
-With the defaults — Mon–Fri, 09:00, 2 hours before — the app warms at 07:00 on
-weekdays and your window resets around 12:00.
-
-### If Claude Code is missing
-
-<img src="docs/setup-required.png" width="330">
-
-The app tells you and links to the install instructions. Once the CLI is installed
-and signed in, open the panel again and it picks it up.
+- **Schedule** — work days with a start time per day, how far ahead to warm
+  (30 minutes to 4 hours), what to do if the Mac was asleep, and which tools to warm.
+- **Notifications** — alerts at 70/80/90/95%, when a 5-hour window or weekly limit
+  resets, when a warm-up fails, and quiet hours that hold alerts until morning.
+- **History** — highest use per tool for each of the last 7 days, and every warm-up
+  with how long it took. Export as CSV.
+- **General** — launch at login, what the menu bar shows (icon, icon and %, or two
+  small bars), how often to check, and which tabs to show.
+- **Tools** — where each CLI was found, its version, and whether it is signed in.
 
 ## Good to know
 
-**What is actually sent?** One request to Haiku, the smallest model, saying
-`Reply only OK.` It costs a fraction of a cent of your quota and takes a few seconds.
+**What is actually sent?** One request saying `Reply only OK.`, to the smallest
+model each tool offers (Haiku for Claude; for agy, a Flash model and GPT-OSS),
+in an empty folder so no project files or `CLAUDE.md` are read.
 
-**Will it warm twice?** No. It refuses to warm again within 10 minutes, and it never
-retroactively warms a time that already passed — so opening the app in the afternoon
-does not fire a warm you did not ask for.
+**How are limits read?** Through each CLI you are already signed in to:
 
-**What if my Mac was asleep?** If the warm was missed and it is less than an hour
-late on a work day, it runs when your Mac wakes. Later than that, it waits for
-tomorrow.
+```
+claude -p "/usage"
+codex app-server        → account/rateLimits/read
+grok agent stdio        → _x.ai/billing
+agy -p "/usage"
+```
 
-**Does it interrupt me?** Only when something fails. A successful warm is silent.
+**Will it warm twice?** No. It skips a tool warmed in the last 10 minutes, and
+never back-fills a warm time that already passed.
 
-**Is any of this sent anywhere?** No. Settings live in `UserDefaults` on your Mac.
-The app talks to nothing except the Claude CLI already installed on your machine.
+**What if my Mac was asleep?** A missed warm runs on wake if it is less than an hour
+late (adjustable). Later than that, it waits for the next work day.
+
+**Is any of this sent anywhere?** No. Settings and history live in `UserDefaults`
+on your Mac. The app talks to nothing except the CLIs installed on your machine.
 
 ## Build from source
 
 ```bash
-git clone https://github.com/Charonyuu/Claude-prewarm.git
-cd Claude-prewarm
+git clone https://github.com/Charonyuu/prewarm.git
+cd prewarm
 ./build.sh --install
 ```
 
 Needs Xcode. The app is a Swift package — `Sources/ClaudePrewarm` holds everything.
 
 ```
-App/          App entry, AppState, settings window
-Models/       AppSettings, RuntimeState, WarmLog, UsageSnapshot
-Services/     ClaudeRunner, UsageReader, ProcessRunner, ScheduleService,
-              LoginItemService, SettingsStore, NotificationService
-Views/        MenuBarView, SettingsView, Theme
-Utilities/    DateCalculator, ClaudeBinaryFinder
+App/        Entry, AppState, status item and panel, windows, hot key
+Models/     Provider, Usage, AppSettings, WarmLog
+Services/   ProviderServices (read + warm), UsageParsers, JSONRPCClient,
+            BinaryFinder, ProcessRunner, ScheduleService, SettingsStore,
+            NotificationService, LoginItemService
+Views/      MenuPanelView, ProviderTabs, SettingsView, OnboardingView,
+            Components, Glyphs, MenuBarIcon, Theme
+Utilities/  DateCalculator, Pace, Clock
+Debug/      ScreenshotRenderer, Probe (debug builds only)
 ```
 
-Under the hood it runs:
-
-```bash
-claude -p "Reply only OK." --model haiku --effort low \
-    --no-session-persistence --strict-mcp-config --disable-slash-commands
-```
-
-…in an empty directory, so no project files or `CLAUDE.md` are read, with a 30
-second timeout. The limits block comes from `claude -p "/usage"`.
-
-Run the checks — schedule maths, usage parsing, then one real warm and one real
-usage read:
+Checks for the schedule maths, settings migration and every usage parser:
 
 ```bash
 ./Tools/verify.sh
+```
+
+A live read of every CLI on this Mac (debug build), optionally warming some:
+
+```bash
+swift build && ./.build/debug/ClaudePrewarm --probe
+./.build/debug/ClaudePrewarm --probe claude agyGemini
+```
+
+The screenshots in this README come from the real views:
+
+```bash
+./.build/debug/ClaudePrewarm --render-screenshots docs/
 ```
 
 ## Releasing
@@ -170,7 +178,7 @@ usage read:
 ```
 
 Then upload the dmg to a GitHub release and bump `version` and `sha256` in
-[the cask](https://github.com/Charonyuu/homebrew-tap/blob/main/Casks/claude-prewarm.rb).
+[the cask](https://github.com/Charonyuu/homebrew-tap/blob/main/Casks/prewarm.rb).
 
 Signs with Developer ID under the hardened runtime, builds a dmg, notarizes it and
 staples the ticket. Notarization credentials are stored once:
@@ -182,10 +190,8 @@ xcrun notarytool store-credentials "prewarm-notary" \
     --password "<app-specific password>"
 ```
 
-Without them the script still produces a signed dmg and says what is missing.
-
 ## Licence
 
 MIT. See [LICENSE](LICENSE).
 
-Not affiliated with Anthropic. "Claude" is a trademark of Anthropic, PBC.
+Not affiliated with Anthropic, OpenAI, xAI or Google. Product names belong to their owners.

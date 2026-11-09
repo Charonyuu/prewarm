@@ -1,11 +1,11 @@
 #!/bin/bash
-# Installs the latest Claude Prewarm release into /Applications.
+# Installs the latest Prewarm release into /Applications.
 #
-#   curl -fsSL https://raw.githubusercontent.com/Charonyuu/Claude-prewarm/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/Charonyuu/prewarm/main/install.sh | bash
 set -euo pipefail
 
-REPO="Charonyuu/Claude-prewarm"
-APP_NAME="Claude Prewarm.app"
+REPO="Charonyuu/prewarm"
+APP_NAME="Prewarm.app"
 TMP="$(mktemp -d)"
 MOUNT=""
 
@@ -16,7 +16,7 @@ cleanup() {
 trap cleanup EXIT
 
 if [[ "$(uname -s)" != "Darwin" ]]; then
-    echo "✗ Claude Prewarm is macOS only." >&2
+    echo "✗ Prewarm is macOS only." >&2
     exit 1
 fi
 
@@ -52,9 +52,10 @@ if [[ -z "$MOUNT" || ! -d "$MOUNT/$APP_NAME" ]]; then
 fi
 
 echo "→ Installing to /Applications…"
-pkill -f "ClaudePrewarm" 2>/dev/null || true
+pkill -f "Prewarm.app/Contents/MacOS" 2>/dev/null || true
 sleep 1
-rm -rf "/Applications/$APP_NAME"
+# 1.x was called "Claude Prewarm"; 2.0 replaces it.
+rm -rf "/Applications/$APP_NAME" "/Applications/Claude Prewarm.app"
 cp -R "$MOUNT/$APP_NAME" "/Applications/$APP_NAME"
 
 echo "→ Launching…"
@@ -65,7 +66,7 @@ cat <<'DONE'
 ✓ Installed.
 
 Look for the bolt in your menu bar. Open it, choose Settings…, and set the days
-and time you start work. Claude Prewarm does the rest.
+and time you start work. Prewarm does the rest.
 
-Needs Claude Code installed and signed in: https://docs.claude.com/en/docs/claude-code/setup
+Needs at least one of Claude Code, Codex, Grok Build or agy, installed and signed in.
 DONE

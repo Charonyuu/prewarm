@@ -10,10 +10,10 @@ VERSION="${1:-}"
 DRY_RUN=false
 [[ "${2:-}" == "--dry-run" ]] && DRY_RUN=true
 
-REPO="Charonyuu/Claude-prewarm"
+REPO="Charonyuu/prewarm"
 TAP_REPO="Charonyuu/homebrew-tap"
-CASK_PATH="Casks/claude-prewarm.rb"
-APP_NAME="Claude Prewarm"
+CASK_PATH="Casks/prewarm.rb"
+APP_NAME="Prewarm"
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 
 die() { echo "✗ $1" >&2; exit 1; }
@@ -71,7 +71,7 @@ gh repo clone "$TAP_REPO" "$TAP_DIR" -- --quiet
 sed -i '' "s/^  version \".*\"/  version \"$VERSION\"/" "$TAP_DIR/$CASK_PATH"
 sed -i '' "s/^  sha256 \".*\"/  sha256 \"$SHA\"/" "$TAP_DIR/$CASK_PATH"
 git -C "$TAP_DIR" add "$CASK_PATH"
-git -C "$TAP_DIR" commit -q -m "claude-prewarm $VERSION"
+git -C "$TAP_DIR" commit -q -m "prewarm $VERSION"
 git -C "$TAP_DIR" push -q origin HEAD
 rm -rf "$TAP_DIR"
 
@@ -84,5 +84,5 @@ cat <<DONE
 
 Anyone on it already updates with:
 
-  brew update && brew upgrade --cask claude-prewarm
+  brew update && brew upgrade --cask prewarm
 DONE

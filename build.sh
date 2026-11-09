@@ -1,5 +1,5 @@
 #!/bin/bash
-# Builds ClaudePrewarm.app.
+# Builds Prewarm.app.
 #
 #   ./build.sh              build only
 #   ./build.sh --install    build, then copy to /Applications and launch
@@ -7,10 +7,10 @@
 #                           notarize it and staple the ticket
 set -euo pipefail
 
-APP_NAME="Claude Prewarm"
-BINARY="ClaudePrewarm"
+APP_NAME="Prewarm"
+BINARY="Prewarm"
 BUNDLE_ID="com.charonyuu.ClaudePrewarm"
-VERSION="1.0.1"
+VERSION="2.0.0"
 SIGN_IDENTITY="Developer ID Application: Cheng Yu Chiang (XADL3RD65Y)"
 NOTARY_PROFILE="prewarm-notary"
 
@@ -25,7 +25,7 @@ swift build -c release --arch arm64 --arch x86_64
 echo "→ Assembling bundle…"
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
-cp "$ROOT/.build/apple/Products/Release/$BINARY" "$APP/Contents/MacOS/$BINARY"
+cp "$ROOT/.build/apple/Products/Release/ClaudePrewarm" "$APP/Contents/MacOS/$BINARY"
 
 cat > "$APP/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
@@ -42,7 +42,7 @@ cat > "$APP/Contents/Info.plist" <<PLIST
     <key>LSMinimumSystemVersion</key><string>14.0</string>
     <key>LSUIElement</key><true/>
     <key>NSHumanReadableCopyright</key><string>100% local. No API keys. No telemetry.</string>
-    <key>NSAppleEventsUsageDescription</key><string>Claude Prewarm opens Terminal so you can sign in to Claude Code.</string>
+    <key>NSAppleEventsUsageDescription</key><string>Prewarm opens Terminal so you can sign in to Claude Code, Codex, Grok Build or agy.</string>
 </dict>
 </plist>
 PLIST
@@ -105,7 +105,8 @@ echo "✓ Built $APP"
 if [[ "$MODE" == "--install" ]]; then
     echo "→ Installing to /Applications…"
     pkill -f "/Applications/$APP_NAME.app" 2>/dev/null || true
-    rm -rf "/Applications/$APP_NAME.app"
+    pkill -f "/Applications/Claude Prewarm.app" 2>/dev/null || true
+    rm -rf "/Applications/$APP_NAME.app" "/Applications/Claude Prewarm.app"
     cp -R "$APP" "/Applications/$APP_NAME.app"
     echo "✓ Installed. Launching…"
     open "/Applications/$APP_NAME.app"
