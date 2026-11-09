@@ -44,9 +44,11 @@ And because you probably use more than one tool, the menu shows every limit side
 **With Homebrew:**
 
 ```bash
-brew install --cask Charonyuu/tap/prewarm
+brew trust charonyuu/tap
+brew install --cask charonyuu/tap/prewarm
 ```
 
+Homebrew 7 asks you to trust a third-party tap once; that is the first line.
 `brew upgrade` keeps it current from then on.
 
 **Or one command, without Homebrew:**
