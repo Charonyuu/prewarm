@@ -10,7 +10,7 @@ set -euo pipefail
 APP_NAME="Prewarm"
 BINARY="Prewarm"
 BUNDLE_ID="com.charonyuu.ClaudePrewarm"
-VERSION="2.0.0"
+VERSION="2.0.1"
 SIGN_IDENTITY="Developer ID Application: Cheng Yu Chiang (XADL3RD65Y)"
 NOTARY_PROFILE="prewarm-notary"
 
