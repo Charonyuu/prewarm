@@ -62,6 +62,15 @@ final class AppState: ObservableObject {
 
     func runtime(_ provider: Provider) -> ProviderRuntime { providers[provider] ?? ProviderRuntime() }
 
+    #if DEBUG
+    func debugSetWarming(_ on: Bool) {
+        var r = runtime(.claude)
+        r.path = r.path ?? "/usr/bin/true"
+        if on { r.warming.insert(.claude) } else { r.warming.removeAll() }
+        providers[.claude] = r
+    }
+    #endif
+
     // MARK: - Lifecycle
 
     func start() {

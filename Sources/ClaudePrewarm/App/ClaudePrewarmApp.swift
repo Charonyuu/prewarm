@@ -32,6 +32,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             Probe.run(warm: Array(CommandLine.arguments.dropFirst(index + 1)))
             exit(0)
         }
+        if CommandLine.arguments.contains("--redraw-selftest") {
+            NSApp.setActivationPolicy(.accessory)
+            RedrawSelftest.run(state: state)
+            return
+        }
         if let index = CommandLine.arguments.firstIndex(of: "--render-screenshots"),
            index + 1 < CommandLine.arguments.count {
             ScreenshotRenderer.run(into: CommandLine.arguments[index + 1])

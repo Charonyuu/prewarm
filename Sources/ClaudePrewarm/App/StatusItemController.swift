@@ -12,6 +12,8 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     private var pulseTimer: Timer?
     private var pulse: CGFloat = 1
     private var appearanceObservation: NSKeyValueObservation?
+    private var lastInput: MenuBarIcon.Input?
+    private(set) var redrawCount = 0
     var openSettings: (SettingsPage?) -> Void = { _ in }
 
     init(state: AppState) {
@@ -38,6 +40,11 @@ final class StatusItemController: NSObject, NSMenuDelegate {
     }
 
     var isPanelShown: Bool { panel.isShown }
+
+    #if DEBUG
+    var debugButton: NSStatusBarButton? { statusItem.button }
+    var debugPulsing: Bool { pulseTimer != nil }
+    #endif
 
     func togglePanel() {
         guard let button = statusItem.button else { return }
@@ -71,6 +78,13 @@ final class StatusItemController: NSObject, NSMenuDelegate {
             dark: dark,
             pulse: pulse
         )
+        let tip = tooltip
+        if button.toolTip != tip { button.toolTip = tip }
+        updatePulse(status == .warming)
+        // Setting image/title fires effectiveAppearance KVO, which calls back here: an endless redraw loop if we always set.
+        guard input != lastInput else { return }
+        lastInput = input
+        redrawCount += 1
         button.image = MenuBarIcon.image(input)
         if style == .iconPercent, let percent = input.percent, status != .setup {
             button.attributedTitle = NSAttributedString(string: " \(percent)%", attributes: [
@@ -80,8 +94,6 @@ final class StatusItemController: NSObject, NSMenuDelegate {
         } else {
             button.attributedTitle = NSAttributedString(string: "")
         }
-        button.toolTip = tooltip
-        updatePulse(status == .warming)
     }
 
     private var tooltip: String {

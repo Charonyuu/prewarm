@@ -167,6 +167,12 @@ swift build && ./.build/debug/ClaudePrewarm --probe
 ./.build/debug/ClaudePrewarm --probe claude agyGemini
 ```
 
+Check the menu bar icon stays still when nothing changes (idle, light/dark switch, after warming):
+
+```bash
+./.build/debug/ClaudePrewarm --redraw-selftest
+```
+
 The screenshots in this README come from the real views:
 
 ```bash
